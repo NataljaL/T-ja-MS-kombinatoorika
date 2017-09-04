@@ -1,114 +1,523 @@
 ---
-title       : Insert the chapter title here
-description : Insert the chapter description here
-attachments :
-  slides_link : https://s3.amazonaws.com/assets.datacamp.com/course/teach/slides_example.pdf
+title       : Kombinatoorika
+description : Kordame kombinatoorikat. Edukat tööd!
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:c5026ccedd
-## A really bad movie
 
-Have a look at the plot that showed up in the viewer to the right. Which type of movie has the worst rating assigned to it?
+--- type:NormalExercise lang:r xp:100 skills:1 key:2cc7965304
+## Elementaarsündmuste hulk
+
+Lihtsamaid elementaarsündmuste ruume saab `R`-is defineerida  funktsiooni `c` abil, näiteks
+
+`Omega <- c("kiri", "vapp")`
+
+Tõenäosusteoorias on palju ülesandeid, mis on seotud mündi viskamisega või täringu veeretamisega. Nende jaoks on olemas paketis `prob` vastavad funktsioonid:
+
+`tosscoin(k)` ja `rolldie(k, nsides = n)`, 
+
+kus `k` vastab müntide/täringute arvule ja `n` täringu korral tahkude arvule (6 on vaikeväärtus).
 
 *** =instructions
-- Adventure
-- Action
-- Animation
-- Comedy
+Pakett `prob` on juba lisatud ja kasutuseks valmis!
+
+1. Defineeri ülesandes 1 elementaarsündmuste hulk `Omega1`, mis vastab klaasi kukkumisele põrandale järgmiste väärtustega: `põhja peale`, `põhi ülespidi` ja `külili` (sisesta väärtused antud järjekorras).
+2. Defineeri ülesandes 2 elementaarsündmuste hulk `Omega2`, mis vastab kolme mündi viskamisele funktsiooni `tosscoin()` abil. 
+3. Defineeri ülesandes 3 elementaarsündmuste hulk `Omega3`, mis vastab kahe täringu visketulemustele, millel mõlemal on vaid 4 tahku.
 
 *** =hint
-Have a look at the plot. Which color does the point with the lowest rating have?
+* Ülesandes 1 kasuta funktsiooni `c()` nii nagu on see tehtud näites.
+* Ülesandes 2 kasuta argumendina arvu `3`.
+* Ülesandes 3 kasuta funktsiooni `rolldie()` esimese argumendiga `k = 2` ja teisega `nsides = 4`.
 
 *** =pre_exercise_code
 ```{r}
-# The pre exercise code runs code to initialize the user's workspace.
-# You can use it to load packages, initialize datasets and draw a plot in the viewer
+source_github <- function(user = "cran", package = "prob") {
+  
+  library(httr)
+  package_source <- paste0(user, "/",package, "/")
+  url <- paste0("https://api.github.com/repos","/", package_source, "git/trees/master?recursive=1")
+  req <- GET(url)
+  stop_for_status(req)
+  filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
+  R_files <- filelist[grep("R/",filelist)]
+  
+  for(file in R_files) {
+    url <- paste0("https://raw.githubusercontent.com/", package_source, "master/", file)
+    source(url)
+  }
+}
+save(file = "source_github.Rda", source_github)
 
-movies <- read.csv("http://s3.amazonaws.com/assets.datacamp.com/course/introduction_to_r/movies.csv")
+source_github()
 
-library(ggplot2)
+source_github <- function(user = "cran", package = "combinat") {
+  
+  library(httr)
+  package_source <- paste0(user, "/",package, "/")
+  url <- paste0("https://api.github.com/repos","/", package_source, "git/trees/master?recursive=1")
+  req <- GET(url)
+  stop_for_status(req)
+  filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
+  R_files <- filelist[grep("R/",filelist)]
+  
+  for(file in R_files) {
+    url <- paste0("https://raw.githubusercontent.com/", package_source, "master/", file)
+    source(url)
+  }
+}
+save(file = "source_github.Rda", source_github)
 
-ggplot(movies, aes(x = runtime, y = rating, col = genre)) + geom_point()
-```
-
-*** =sct
-```{r}
-# SCT written with testwhat: https://github.com/datacamp/testwhat/wiki
-
-msg_bad <- "That is not correct!"
-msg_success <- "Exactly! There seems to be a very bad action movie in the dataset."
-test_mc(correct = 2, feedback_msgs = c(msg_bad, msg_success, msg_bad, msg_bad))
-```
-
---- type:NormalExercise lang:r xp:100 skills:1 key:1ca6869a23
-## More movies
-
-In the previous exercise, you saw a dataset about movies. In this exercise, we'll have a look at yet another dataset about movies!
-
-A dataset with a selection of movies, `movie_selection`, is available in the workspace.
-
-*** =instructions
-- Check out the structure of `movie_selection`.
-- Select movies with a rating of 5 or higher. Assign the result to `good_movies`.
-- Use `plot()` to  plot `good_movies$Run` on the x-axis, `good_movies$Rating` on the y-axis and set `col` to `good_movies$Genre`.
-
-*** =hint
-- Use `str()` for the first instruction.
-- For the second instruction, you should use `...[movie_selection$Rating >= 5, ]`.
-- For the plot, use `plot(x = ..., y = ..., col = ...)`.
-
-*** =pre_exercise_code
-```{r}
-# You can also prepare your dataset in a specific way in the pre exercise code
-load(url("https://s3.amazonaws.com/assets.datacamp.com/course/teach/movies.RData"))
-movie_selection <- Movies[Movies$Genre %in% c("action", "animated", "comedy"), c("Genre", "Rating", "Run")]
-
-# Clean up the environment
-rm(Movies)
+source_github()
 ```
 
 *** =sample_code
 ```{r}
-# movie_selection is available in your workspace
+# Ülesanne 1. Klaasi kukkumine
 
-# Check out the structure of movie_selection
+Omega1 <- c(___________)
 
+# Ülesanne 2. Kolme mündi viske tulemused
 
-# Select movies that have a rating of 5 or higher: good_movies
+Omega2 <- ________________
 
+# Ülesanne 3. Kahe 4-tahulise täringu viske tulemused
 
-# Plot Run (i.e. run time) on the x axis, Rating on the y axis, and set the color using Genre
+Omega3 <- ________________
 
 ```
 
 *** =solution
 ```{r}
-# movie_selection is available in your workspace
+# Ülesanne 1. Klaasi kukkumine
 
-# Check out the structure of movie_selection
-str(movie_selection)
+Omega1 <- c("põhja peale", "põhi ülespidi", "külili")
 
-# Select movies that have a rating of 5 or higher: good_movies
-good_movies <- movie_selection[movie_selection$Rating >= 5, ]
+# Ülesanne 2. Kolme mündi viske tulemused
 
-# Plot Run (i.e. run time) on the x axis, Rating on the y axis, and set the color using Genre
-plot(good_movies$Run, good_movies$Rating, col = good_movies$Genre)
+Omega2 <- tosscoin(3)
+
+# Ülesanne 3. Kahe 4-tahulise täringu viske tulemused
+
+Omega3 <- rolldie(2, nsides = 4)
+
+
+```
+
+*** =sct
+```{r}
+test_object("Omega1", undefined_msg = NULL, incorrect_msg = "Kontrolli kas muutuja `Omega1` väärtused on samad kui ülesandes antud ja nõutud järjekorras!")
+test_object("Omega2", undefined_msg = NULL, incorrect_msg = "Kas kasutasid funktsiooni `tosscoin` ja panid argumendiks `3`?")
+test_object("Omega3", undefined_msg = NULL, incorrect_msg = "Kas kasutasid funktsiooni `rolldie` täringute arvuga `2` ja argumendi `nsides` väärtusega `4`?")
+
+success_msg("Hästi tehtud! Suundu järgmise harjutuse juurde!")
+```
+
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:1bfaf7f47c
+## Kombinatsioonid
+
+Funktsioon `expand.grid()` võimaldab luua kõikvõimalikest kombinatsioonidest andmetabeli. Funktsiooni sisendiks on elementaarsündmuste vektor või vektorid. Seda funktsiooni on samuti võimalik kasutada elementaarsündmuste hulga defineerimisel.  
+
+
+*** =instructions
+
+- Proovi läbi näited 1 ja 2.
+- **Ülesanne**: olgu antud kaardipakk järgmiste väärtustega:
+`"A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"` ja mastidega
+`"poti", "ärtu", "risti", "ruutu"`
+Moodustada nendest vektoritest kõikvõimalikud kombinatsioonid. NB! Kasuta esimese argumendina väärtuseid ja teisena masti.
+
+
+*** =hint
+
+Kasuta vektori moodustamiseks funktsiooni `c()`, näiteks `c("punane", "kollane", "sinine")`.
+
+*** =pre_exercise_code
+```{r}
+
+```
+
+*** =sample_code
+```{r}
+# Näide 1. Kõikvõimalikud kombinatsioonid visates ausat münti kolm korda:
+mynt <- c("k", "v")
+tulemused1 <- expand.grid(mynt, mynt, mynt)
+tulemused1
+
+# Näide 2. Korraga visatakse ausat münti ja ausat täringut. Kõikvõimalikud kombinatsioonid:
+mynt <- c("k", "v")
+taring <- 1:6
+tulemused2 <- expand.grid(mynt,taring)
+tulemused2
+
+# Ülesanne
+vaartused <- _______________
+mastid <- ________________
+
+tulemused3 <- ______________ 
+
+```
+
+*** =solution
+```{r}
+# Näide 1. Omistame muutjale y väärtuse 2 ja väljastame väärtuse
+# Näide 1. Kõikvõimalikud kombinatsioonid visates ausat münti kolm korda:
+mynt <- c("k", "v")
+tulemused1 <- expand.grid(mynt, mynt, mynt)
+tulemused1
+
+# Näide 2. Korraga visatakse ausat münti ja ausat täringut. Kõikvõimalikud kombinatsioonid:
+mynt <- c("k", "v")
+taring <- 1:6
+tulemused2 <- expand.grid(mynt,taring)
+tulemused2
+
+# Ülesanne
+vaartused <- c("A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K")
+mastid <- c("poti", "ärtu", "risti", "ruutu")
+
+tulemused3 <- expand.grid(vaartused, mastid)
+
+```
+
+*** =sct
+```{r}
+test_object("vaartused",  incorrect_msg = "Kas sisestatud väärtused ja nende järjekord vektoris `vaartused` vastab ülesandes antule? ")
+test_object("mastid",  incorrect_msg = "Kas sisestatud väärtused ja nende järjekord vektoris `mastid` vastab ülesandes antule? ")
+
+test_student_typed("tulemused3 <- expand.grid(vaartused, mastid)", not_typed_msg =  "Kas kasutasid õiget funktsiooni? Kas argumendid on õiges järjekorras?")
+
+success_msg("Tubli! Võta kommi!")
+```
+
+
+--- type:NormalExercise lang:r xp:100 skills:1 key:05f6e26773
+## Valik tagasipanekuga ja tagasipanekuta
+Sageli on ülesanded seotud valikutega mingist hulgast (näiteks urnist). Valikud võivad olla kas tagasipanekuga (võtame juhuslikult ühe kuuli urnist, fikseerime selle tulemuse ning paneme kõrvale; seejärel võtame järgmise kuuli jne) või tagasipanekuga (peale tulemuse fikseerimist paname kuuli tagasi urni). Mõnikord on valikute juures tähtis ka võtmise järjekord (näiteks, esimesena on võetud musta värvi kuul, teisena punane, kolmandana sinine jne).
+
+Erinevaid valikuid saab teostada funktsiooni `urnsamples(x, size, replace, ordered)` abil, mis kuulub paketti `prob`. Argumentide seletused ja võimalikud väärtused on järgmised:
+
+* `x` -- väärtuste vektor, millest toimub valik (väärtused kõik peavad olema erinevad!)
+* `size` -- valitavate objektide arv
+* `replace` -- kas tagasipanekuga (`=TRUE`) või tagasipanekuta (`=FALSE`) valik
+* `ordered` -- kas valitavate objektide järjestus on tähtis (`=TRUE`) või mitte (`=FALSE`)
+
+*** =instructions
+
+* Proovi läbi näited 1-4, kus urnist kuulidega 1, 2 ja 3 võetakse 2 kuuli.
+* **Ülesanne**: koosnegu urn viiest kuulist tähtedega `"a"` kuni `"e"` (funktsioon `letters[]` on abiks!), muutuja nimeks olgu `urn1`. Urnist võetakse 3 kuuli tagasipanekuta, kusjuures võtmise järjekord on oluline. Millised on võimalikud katsetulemused? Omista need muutujale `tulemus`.
+
+*** =hint
+* Funktsioon `letters` deineerib vektorina tähestikku, millest tuleks võtta 5 esimest tähte käsuga `1:5`.
+
+
+*** =pre_exercise_code
+```{r}
+source_github <- function(user = "cran", package = "prob") {
+  
+  library(httr)
+  package_source <- paste0(user, "/",package, "/")
+  url <- paste0("https://api.github.com/repos","/", package_source, "git/trees/master?recursive=1")
+  req <- GET(url)
+  stop_for_status(req)
+  filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
+  R_files <- filelist[grep("R/",filelist)]
+  
+  for(file in R_files) {
+    url <- paste0("https://raw.githubusercontent.com/", package_source, "master/", file)
+    source(url)
+  }
+}
+save(file = "source_github.Rda", source_github)
+
+source_github()
+
+source_github <- function(user = "cran", package = "combinat") {
+  
+  library(httr)
+  package_source <- paste0(user, "/",package, "/")
+  url <- paste0("https://api.github.com/repos","/", package_source, "git/trees/master?recursive=1")
+  req <- GET(url)
+  stop_for_status(req)
+  filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
+  R_files <- filelist[grep("R/",filelist)]
+  
+  for(file in R_files) {
+    url <- paste0("https://raw.githubusercontent.com/", package_source, "master/", file)
+    source(url)
+  }
+}
+save(file = "source_github.Rda", source_github)
+
+source_github()
+
+```
+
+*** =sample_code
+```{r}
+#Näide 1. Kaks kuuli urnist tagasipanekuTA, järjestus POLE oluline
+urn <- 1:3
+a <- urnsamples(urn, size = 2, replace = FALSE, ordered = FALSE)
+a
+
+#Näide 2. Kaks kuuli urnist tagasipanekuGA, järjestus POLE oluline
+b <- urnsamples(urn, size = 2, replace = TRUE, ordered = FALSE)
+b
+
+#Näide 3. Kaks kuuli urnist tagasipanekuTA, järjestus ON oluline
+c <- urnsamples(urn, size = 2, replace = FALSE, ordered = TRUE)
+c
+
+#Näide 4. Kaks kuuli urnist tagasipanekuGA, järjestus ON oluline
+d <- urnsamples(urn, size = 2, replace = TRUE, ordered = TRUE)
+d
+
+#Ülesanne. Kolm kuuli viiest tagasipanekuta, järjestus on oluline.
+urn1 <- ________________________
+tulemus <- ___________________________
+```
+
+*** =solution
+```{r}
+#Näide 1. Kaks kuuli urnist tagasipanekuTA, järjestus POLE oluline
+urn <- 1:3
+a <- urnsamples(urn, size = 2, replace = FALSE, ordered = FALSE)
+a
+
+#Näide 2. Kaks kuuli urnist tagasipanekuGA, järjestus POLE oluline
+b <- urnsamples(urn, size = 2, replace = TRUE, ordered = FALSE)
+b
+
+#Näide 3. Kaks kuuli urnist tagasipanekuTA, järjestus ON oluline
+c <- urnsamples(urn, size = 2, replace = FALSE, ordered = TRUE)
+c
+
+#Näide 4. Kaks kuuli urnist tagasipanekuGA, järjestus ON oluline
+d <- urnsamples(urn, size = 2, replace = TRUE, ordered = TRUE)
+d
+
+#Ülesanne. Kolm kuuli viiest tagasipanekuta, järjestus on oluline.
+urn1 <- letters[1:5]
+tulemus <- urnsamples(urn1, size = 3, replace = FALSE, ordered = TRUE)
+
+```
+
+*** =sct
+```{r}
+test_object("urn1",  incorrect_msg = "Kas kasutasud `letters[1:5]` muutuja `urn1` defineerimiseks?")
+test_object("tulemus",  incorrect_msg = "Viga muutujas `tulemus`. Proovi veel!")
+
+success_msg("Tubli! Võta kommi!")
+
+
+
+
+```
+
+
+
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:651f739370
+## Ülesanne 1 (värvipliiatsid)
+
+Karbis on 15 erinevat värvipliiatsit. Juhuslikult võetakse sealt 4 ja antakse Liisale joonistamiseks. Mitu erinevat varianti on selle nelja pliiatsi valimiseks? Pliiatsite järjestus pole Liisa jaoks oluline. 
+
+NB! Kaks funktsiooni võivad osutuda kasulikuks  ridade arvu leidmisel tabelis: `dim()` ja `nrow()`.
+
+*** =instructions
+
+- 32760
+- 3060
+- 1365
+- 50625
+
+*** =hint
+
+Kasuta funktsiooni `urnsamples()`
+
+*** =pre_exercise_code
+```{r}
+source_github <- function(user = "cran", package = "prob") {
+  
+  library(httr)
+  package_source <- paste0(user, "/",package, "/")
+  url <- paste0("https://api.github.com/repos","/", package_source, "git/trees/master?recursive=1")
+  req <- GET(url)
+  stop_for_status(req)
+  filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
+  R_files <- filelist[grep("R/",filelist)]
+  
+  for(file in R_files) {
+    url <- paste0("https://raw.githubusercontent.com/", package_source, "master/", file)
+    source(url)
+  }
+}
+save(file = "source_github.Rda", source_github)
+
+source_github()
+
+source_github <- function(user = "cran", package = "combinat") {
+  
+  library(httr)
+  package_source <- paste0(user, "/",package, "/")
+  url <- paste0("https://api.github.com/repos","/", package_source, "git/trees/master?recursive=1")
+  req <- GET(url)
+  stop_for_status(req)
+  filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
+  R_files <- filelist[grep("R/",filelist)]
+  
+  for(file in R_files) {
+    url <- paste0("https://raw.githubusercontent.com/", package_source, "master/", file)
+    source(url)
+  }
+}
+save(file = "source_github.Rda", source_github)
+
+source_github()
+
 ```
 
 *** =sct
 ```{r}
 # SCT written with testwhat: https://github.com/datacamp/testwhat/wiki
 
-test_function("str", args = "object",
-              not_called_msg = "You didn't call `str()`!",
-              incorrect_msg = "You didn't call `str(object = ...)` with the correct argument, `object`.")
+msg_bad <- "Mõtle veel!"
+msg_success <- "Just nii!"
+test_mc(correct = 3, feedback_msgs = c(msg_bad,msg_bad, msg_success, msg_bad))
+```
 
-test_object("good_movies")
 
-test_function("plot", args = "x")
-test_function("plot", args = "y")
-test_function("plot", args = "col")
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:2f502adc67
+## Ülesanne 2 (arvude koostamine)
 
-test_error()
+Mitu erinevat 6-kohalist arvu on võimalik koostada numbritest 0, 1, 3, 5, 7 ja 9?
 
-success_msg("Good work!")
+NB! Arvud, mis algavad 0-ga (nt 051397) ei sobi, kuna sel juhul saame 5-kohalise arvu (51397).
+*** =instructions
+
+- 336
+- 720
+- 600
+- 43531
+
+*** =hint
+Leia kõigepealt järjestuste arvu kuuest kuue kaupa ja lahuta sellest maha järjestuste arvu viiest viie kaupa.
+
+*** =pre_exercise_code
+```{r}
+source_github <- function(user = "cran", package = "prob") {
+  
+  library(httr)
+  package_source <- paste0(user, "/",package, "/")
+  url <- paste0("https://api.github.com/repos","/", package_source, "git/trees/master?recursive=1")
+  req <- GET(url)
+  stop_for_status(req)
+  filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
+  R_files <- filelist[grep("R/",filelist)]
+  
+  for(file in R_files) {
+    url <- paste0("https://raw.githubusercontent.com/", package_source, "master/", file)
+    source(url)
+  }
+}
+save(file = "source_github.Rda", source_github)
+
+source_github()
+
+source_github <- function(user = "cran", package = "combinat") {
+  
+  library(httr)
+  package_source <- paste0(user, "/",package, "/")
+  url <- paste0("https://api.github.com/repos","/", package_source, "git/trees/master?recursive=1")
+  req <- GET(url)
+  stop_for_status(req)
+  filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
+  R_files <- filelist[grep("R/",filelist)]
+  
+  for(file in R_files) {
+    url <- paste0("https://raw.githubusercontent.com/", package_source, "master/", file)
+    source(url)
+  }
+}
+save(file = "source_github.Rda", source_github)
+
+source_github()
+
+```
+
+*** =sct
+```{r}
+# SCT written with testwhat: https://github.com/datacamp/testwhat/wiki
+
+msg_bad <- "Proovi veel!"
+msg_success <- "Väga tubli!"
+test_mc(correct = 4, feedback_msgs = c(msg_bad,msg_bad,  msg_bad, msg_success))
+```
+
+
+
+
+--- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:e40ebad664
+## Ülesanne 3 (sport)
+Toomas tegeleb aktiivselt spordiga, kusjuures 4 päeval nädalas ta sõidab rattaga, 2 päeval nädalas käib jõusaalis ja 1 päeva nädalas ta puhkab. Mitu erinevaid nädalaplaane on võimalik tal selle põhjal koostada?
+
+Vihje: kasuta funktsiooni `urnsamples` ja edasi rakenda funktsiooni `unique()` unikaalsete ridade saamiseks. Ära unusta kasutada funktsiooni `nrow()` ridade arvu saamiseks tabelis. 
+
+
+*** =instructions
+
+* 105
+* 203
+* 5040
+* minu vastust pole pakutud
+
+*** =hint
+
+*** =pre_exercise_code
+```{r}
+source_github <- function(user = "cran", package = "prob") {
+  
+  library(httr)
+  package_source <- paste0(user, "/",package, "/")
+  url <- paste0("https://api.github.com/repos","/", package_source, "git/trees/master?recursive=1")
+  req <- GET(url)
+  stop_for_status(req)
+  filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
+  R_files <- filelist[grep("R/",filelist)]
+  
+  for(file in R_files) {
+    url <- paste0("https://raw.githubusercontent.com/", package_source, "master/", file)
+    source(url)
+  }
+}
+save(file = "source_github.Rda", source_github)
+
+source_github()
+
+source_github <- function(user = "cran", package = "combinat") {
+  
+  library(httr)
+  package_source <- paste0(user, "/",package, "/")
+  url <- paste0("https://api.github.com/repos","/", package_source, "git/trees/master?recursive=1")
+  req <- GET(url)
+  stop_for_status(req)
+  filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
+  R_files <- filelist[grep("R/",filelist)]
+  
+  for(file in R_files) {
+    url <- paste0("https://raw.githubusercontent.com/", package_source, "master/", file)
+    source(url)
+  }
+}
+save(file = "source_github.Rda", source_github)
+
+source_github()
+```
+
+*** =sct
+```{r}
+# SCT written with testwhat: https://github.com/datacamp/testwhat/wiki
+
+msg_bad <- "See tulemus pole küll õige"
+msg_success <- "Suurepärane!"
+test_mc(correct = 1, feedback_msgs = c( msg_success, msg_bad,msg_bad,  msg_bad))
 ```
