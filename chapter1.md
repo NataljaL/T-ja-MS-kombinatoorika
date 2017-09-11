@@ -397,7 +397,7 @@ NB! Arvud, mis algavad 0-ga (nt 051397) ei sobi, kuna sel juhul saame 5-kohalise
 - 336
 - 720
 - 600
-- 43531
+- 38880
 
 *** =hint
 Leia kõigepealt järjestuste arvu kuuest kuue kaupa ja lahuta sellest maha järjestuste arvu viiest viie kaupa.
