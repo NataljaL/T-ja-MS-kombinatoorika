@@ -389,7 +389,7 @@ test_mc(correct = 3, feedback_msgs = c(msg_bad,msg_bad, msg_success, msg_bad))
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1 key:2f502adc67
 ## Ülesanne 2 (arvude koostamine)
 
-Mitu erinevat 6-kohalist arvu on võimalik koostada numbritest 0, 1, 3, 5, 7 ja 9?
+Mitu erinevat 6-kohalist arvu on võimalik koostada numbritest 0, 1, 3, 5, 7 ja 9? Numbrid võivad korduda.
 
 NB! Arvud, mis algavad 0-ga (nt 051397) ei sobi, kuna sel juhul saame 5-kohalise arvu (51397).
 *** =instructions
@@ -400,7 +400,7 @@ NB! Arvud, mis algavad 0-ga (nt 051397) ei sobi, kuna sel juhul saame 5-kohalise
 - 38880
 
 *** =hint
-Leia kõigepealt järjestuste arvu kuuest kuue kaupa ja lahuta sellest maha järjestuste arvu viiest viie kaupa.
+Esimesele kohale saab valida 5 variandi vahel (1,3,5,7 või 9), teisele 6 vahel (kõik pakutud numbrid), kolmandale, neljandale, viiendale ja kuuendale on iga kord võimalik valida 6 variandi vahel.
 
 *** =pre_exercise_code
 ```{r}
