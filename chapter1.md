@@ -193,7 +193,7 @@ success_msg("Tubli! Võta kommi!")
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:05f6e26773
 ## Valik tagasipanekuga ja tagasipanekuta
-Sageli on ülesanded seotud valikutega mingist hulgast (näiteks urnist). Valikud võivad olla kas tagasipanekuga (võtame juhuslikult ühe kuuli urnist, fikseerime selle tulemuse ning paneme kõrvale; seejärel võtame järgmise kuuli jne) või tagasipanekuta (peale tulemuse fikseerimist paname kuuli tagasi urni). Mõnikord on valikute juures tähtis ka võtmise järjekord (näiteks, esimesena on võetud musta värvi kuul, teisena punane, kolmandana sinine jne).
+Sageli on ülesanded seotud valikutega mingist hulgast (näiteks urnist). Valikud võivad olla kas tagasipanekuta (võtame juhuslikult ühe kuuli urnist, fikseerime selle tulemuse ning paneme kõrvale; seejärel võtame järgmise kuuli jne) või tagasipanekuga (peale tulemuse fikseerimist paname kuuli tagasi urni). Mõnikord on valikute juures tähtis ka võtmise järjekord (näiteks, esimesena on võetud musta värvi kuul, teisena punane, kolmandana sinine jne).
 
 Erinevaid valikuid saab teostada funktsiooni `urnsamples(x, size, replace, ordered)` abil, mis kuulub paketti `prob`. Argumentide seletused ja võimalikud väärtused on järgmised:
 
